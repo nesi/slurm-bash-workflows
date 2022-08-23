@@ -38,38 +38,6 @@ For a workshop please delete the following block until the next dashed-line
 {% endcomment %}
 
 
-<div class="alert alert-danger">
-This is the workshop template. Delete these lines and use it to
-<a href="https://carpentries.github.io/workshop-template/customization/index.html">customize</a>
-your own website. If you are running a self-organized workshop or have not put
-in a workshop request yet, please also fill in
-<a href="{{site.amy_site}}/forms/self-organised/">this workshop request form</a>
-to let us know about your workshop and our administrator may contact you if we
-need any extra information.
-If this is a pilot workshop for a new lesson,
-set the `pilot` field to `true` in `_config.yml`.
-For workshops teaching a lesson in The Carpentries Incubator,
-remember to uncomment the `incubator_lesson_site`, `incubator_pre_survey`, and `incubator_post_survey`
-fields in `_config.yml`
-</div>
-
-{% comment %}
-8< ============================= until here ==================
-{% endcomment %}
-
-
-{% comment %}
-Check DC curriculum
-{% endcomment %}
-
-{% if site.carpentry == "dc" %}
-{% unless site.curriculum == "dc-astronomy" or site.curriculum == "dc-ecology" or site.curriculum == "dc-genomics" or site.curriculum == "dc-socsci" or site.curriculum == "dc-geospatial" %}
-<div class="alert alert-warning">
-It looks like you are setting up a website for a Data Carpentry curriculum but you haven't specified the curriculum type in the <code>_config.yml</code> file (current value in <code>_config.yml</code>: "<strong>{{ site.curriculum }}</strong>", possible values: <code>dc-astronomy</code>, <code>dc-ecology</code>, <code>dc-genomics</code>, <code>dc-socsci</code>, or <code>dc-geospatial</code>). After editing this file, you need to run <code>make serve</code> again to see the changes reflected.
-</div>
-{% endunless %}
-{% endif %}
-
 {% comment %}
 Check SWC curriculum
 {% endcomment %}
@@ -119,68 +87,6 @@ the pitch.
 {% include lc/intro.html %}
 {% endif %}
 
-{% if site.pilot %}
-This is a pilot workshop, testing out a lesson that is still under development. The lesson authors would appreciate any feedback you can give them about the lesson content and suggestions for how it could be further improved.
-{% endif %}
-
-{% comment %}
-AUDIENCE
-
-Explain who your audience is.  (In particular, tell readers if the
-workshop is only open to people from a particular institution.
-{% endcomment %}
-{% if site.carpentry == "swc" %}
-{% include swc/who.html %}
-{% elsif site.carpentry == "dc" %}
-{% include dc/who.html %}
-{% elsif site.carpentry == "lc" %}
-{% include lc/who.html %}
-{% endif %}
-
-{% comment %}
-LOCATION
-
-This block displays the address and links to maps showing directions
-if the latitude and longitude of the workshop have been set.  You
-can use https://www.latlong.net/ to find the lat/long of an
-address.
-{% endcomment %}
-{% assign begin_address = page.address | slice: 0, 4 | downcase  %}
-{% if page.address == "online" %}
-{% assign online = "true_private" %}
-{% elsif begin_address contains "http" %}
-{% assign online = "true_public" %}
-{% else %}
-{% assign online = "false" %}
-{% endif %}
-{% if page.latitude and page.longitude and online == "false" %}
-<p id="where">
-  <strong>Where:</strong>
-  {{page.address}}.
-  Get directions with
-  <a href="//www.openstreetmap.org/?mlat={{page.latitude}}&mlon={{page.longitude}}&zoom=16">OpenStreetMap</a>
-  or
-  <a href="//maps.google.com/maps?q={{page.latitude}},{{page.longitude}}">Google Maps</a>.
-</p>
-{% elsif online == "true_public" %}
-<p id="where">
-  <strong>Where:</strong>
-  online at <a href="{{page.address}}">{{page.address}}</a>.
-  If you need a password or other information to access the training,
-  the instructor will pass it on to you before the workshop.
-</p>
-{% elsif online == "true_private" %}
-<p id="where">
-  <strong>Where:</strong> This training will take place online.
-  The instructors will provide you with the information you will need to connect to this meeting.
-</p>
-{% endif %}
-
-{% comment %}
-DATE
-
-This block displays the date and links to Google Calendar.
-{% endcomment %}
 {% if page.humandate %}
 <p id="when">
   <strong>When:</strong>
@@ -188,57 +94,6 @@ This block displays the date and links to Google Calendar.
   {% include workshop_calendar.html %}
 </p>
 {% endif %}
-
-{% comment %}
-SPECIAL REQUIREMENTS
-
-Modify the block below if there are any special requirements.
-{% endcomment %}
-<p id="requirements">
-  <strong>Requirements:</strong>
-  {% if online == "false" %}
-    Participants must bring a laptop with a
-    Mac, Linux, or Windows operating system (not a tablet, Chromebook, etc.) that they have administrative privileges on.
-  {% else %}
-    Participants must have access to a computer with a
-    Mac, Linux, or Windows operating system (not a tablet, Chromebook, etc.) that they have administrative privileges on.
-  {% endif %}
-  They should have a few specific software packages installed (listed <a href="#setup">below</a>).
-</p>
-
-{% comment %}
-ACCESSIBILITY
-
-Modify the block below if there are any barriers to accessibility or
-special instructions.
-{% endcomment %}
-<p id="accessibility">
-  <strong>Accessibility:</strong>
-{% if online == "false" %}
-  We are committed to making this workshop
-  accessible to everybody.  For workshops at a physical location, the workshop organizers have checked that:
-</p>
-<ul>
-  <li>The room is wheelchair / scooter accessible.</li>
-  <li>Accessible restrooms are available.</li>
-</ul>
-<p>
-  Materials will be provided in advance of the workshop and
-  large-print handouts are available if needed by notifying the
-  organizers in advance.  If we can help making learning easier for
-  you (e.g. sign-language interpreters, lactation facilities) please
-  get in touch (using contact details below) and we will
-  attempt to provide them.
-</p>
-{% else %}
-  We are dedicated to providing a positive and accessible learning environment for all. Please
-  notify the instructors in advance of the workshop if you require any accommodations or if there is
-  anything we can do to make this workshop more accessible to you.
-</p>
-{% endif %}
-
-{% comment %}
-CONTACT EMAIL ADDRESS
 
 Display the contact email address set in the configuration file.
 {% endcomment %}
@@ -267,35 +122,7 @@ Display the contact email address set in the configuration file.
   To learn more about the roles at the workshop (who will be doing what),
   refer to <a href="https://carpentries.org/workshop_faq/#what-are-the-roles-of-everyone-participating-in-a-workshop">our Workshop FAQ</a>.
 </p>
-
-{% comment %}
-WHO CAN ATTEND?
-
-If you would like to specify who can attend the workshop,
-you can use the section below.
-
-Move the 'endcomment' tag above the beginning of the following
-<p> tag to make this section visible.
-
-Edit the text to match who can attend the workshop. For instance:
-- This workshop is open to affiliates to ABC university.
-- This workshop is open to the public.
-- If you are interested in attending this workshop, contact me@example.com
-  for more information
-
-<p id="who-can-attend">
-    <strong>Who can attend?:</strong>
-    This workshop is open to ....
-</p>
-{% endcomment %}
-
-<hr/>
-
-{% comment%}
-CODE OF CONDUCT
-{% endcomment %}
 <h2 id="code-of-conduct">Code of Conduct</h2>
-
 <p>
 Everyone who participates in Carpentries activities is required to conform to the <a href="https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html">Code of Conduct</a>. This document also outlines how to report an incident if needed.
 </p>
