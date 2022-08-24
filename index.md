@@ -95,8 +95,6 @@ the pitch.
 </p>
 {% endif %}
 
-Display the contact email address set in the configuration file.
-{% endcomment %}
 <p id="contact">
   <strong>Contact:</strong>
   Please email
