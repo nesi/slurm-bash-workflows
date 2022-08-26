@@ -102,9 +102,17 @@ In both examples, `partTwo.sl` will run on the successful conclusion of `partOne
 
 ```
 lastjobid=$(sbatch partOne.sl | awk '{ print $4 }')
-lastjobid=$(sbatch -d ${lastjobid} partTwo.sl | awk '{ print $4 }')
-lastjobid=$(sbatch -d ${lastjobid} partThree.sl | awk '{ print $4 }')
-sbatch -d ${lastjobid} partFour.sl
+lastjobid=$(sbatch -d afterok:${lastjobid} partTwo.sl | awk '{ print $4 }')
+lastjobid=$(sbatch -d afterok:${lastjobid} partThree.sl | awk '{ print $4 }')
+sbatch -d afterok:${lastjobid} partFour.sl
 ```
+
+> ## Why this way? 
+> What are the advantages of using of using Slurm job dependencies over submitting the next stage on the completion of the first?
+> > ## Solution
+> > * Scheduling: Using dependencies allows your later stages to submitted into the queue much earlier, reducing wait time between stages.
+> > e.g. `stage1.sl` is expected to run for 10:00:00, if `stage2.sl` is submitted at the same time, dependent on `stage1.sl`, the sceduler will have 10 hours more to find and reserve the appropriate resources needed than if `stage2.sl` was submitted at the end of `stage1.sl`.
+> {: .solution}
+{: .challenge}
 
 {% include links.md %}
