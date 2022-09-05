@@ -1,5 +1,5 @@
 ---
-layout: workshop      # DON'T CHANGE THIS.
+layout: lesson      # DON'T CHANGE THIS.
 # More detailed instructions (including how to fill these variables for an
 # online workshop) are available at
 # https://carpentries.github.io/workshop-template/customization/index.html
@@ -20,6 +20,8 @@ collaborative_notes:  # optional: URL for the workshop collaborative notes, e.g.
 eventbrite:           # optional: alphanumeric key for Eventbrite registration, e.g., "1234567890AB" (if Eventbrite is being used)
 ---
 
+Replace me
+
 The Unix shell has been around longer than most of its users
 have been alive. It has survived because it's a powerful tool that
 allows users to perform complex and powerful tasks, often with just
@@ -32,6 +34,9 @@ you to this powerful tool.
 
 > ## Prerequisites
 >
+>
+> Replace me
+>
 > This lesson guides you through the basics of file systems and the
 > shell. If you have stored files on a computer at all and recognize
 > the word "file" and either "directory" or "folder" (two common words
@@ -42,3 +47,5 @@ you to this powerful tool.
 > and scripts, you probably want to explore the next lesson:
 > [shell-extras](https://carpentries-incubator.github.io/shell-extras/).
 {: .prereq}
+{% include links.md %}
+
