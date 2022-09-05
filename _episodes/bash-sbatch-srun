@@ -1,0 +1,27 @@
+---
+title: "Bash vs Sbatch vs Srun"
+teaching: 15
+exercises: 5
+questions:
+- "What is a Slurm job dependency?"
+keypoints:
+- "Dependency chains allow for better scheduling."
+---
+
+## Scheduling
+
+When you are running commands in your terminal, you are interacting with the _Login Node_, a shared space intended for interactive use.
+You can run bash scripts here e.g `bash myScript.sh`, and it will run right away however it will be running on local resources.
+
+
+| -- | -- | -- | -- | -- |
+| Command | Type | Blocking | Example | Usage
+| `bash` | Current enviroment | Yes |
+| `sbatch` | Scheduled | No | 
+| `srun` | Scheduled | Yes |
+| `sbatch --wrap` | Sceduled | No |
+
+
+## JupyterHub
+> If you are using JupyterHub, you will _not_ be on the login node, however for the purposes of this lesson the same contstrains apply.
+{: .callout}

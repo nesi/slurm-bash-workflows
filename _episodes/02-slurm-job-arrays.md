@@ -92,4 +92,4 @@ e.g. Will submit 100 jobs, but no more than 10 will be allowed to run at once.
 
 
 
-### scatter-gather workflow
+{% include links.md %}
