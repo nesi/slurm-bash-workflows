@@ -68,11 +68,15 @@ Or, if multiple conditions need to be used, this can be done using a `,` delimet
 
 > ## Where Do Slurm Parameters go?
 > Slurm parameters can be specified in a _Slurm Script_ following the `#SBATCH` token.  
-> > #SBATCH --_key_   _value_
+> ```
+> #SBATCH --_key_   _value_
+> ```
 > {: .language-bash}
 > Alternatively, parameters can be provided on the command line when submitting a Slurm job.
-> > sbatch --_key_ _value_ _script.sl_
-> > {: .language-bash}
+> ```
+> sbatch --_key_ _value_ _script.sl_
+> ```
+> {: .language-bash}
 > Parameters given on the command line, overrule parameters inside the script.
 {: .callout}
 
@@ -87,14 +91,16 @@ sbatch -d afterok:${jobid} partTwo.sl
 Or, submit the second job from within the first.
 
 Inside `partOne.sl`
-> !#/bin/bash
-> 
-> #SBATCH --job-name stuff
->
-> # Include this line right at the start, before you do any work.
-> sbatch --dependency afterok:${SLURM_JOB_ID} partTwo.sl
->
-> # Work goes here
+```
+!#/bin/bash
+ 
+#SBATCH --job-name stuff
+
+# Include this line right at the start, before you do any work.
+sbatch --dependency afterok:${SLURM_JOB_ID} partTwo.sl
+
+# Work goes here
+```
 {: .language-bash}
 
 In both examples, `partTwo.sl` will run on the successful conclusion of `partOne.sl`.
@@ -112,6 +118,7 @@ lastjobid=$(sbatch -d afterok:${lastjobid} partTwo.sl | awk '{ print $4 }')
 lastjobid=$(sbatch -d afterok:${lastjobid} partThree.sl | awk '{ print $4 }')
 sbatch -d afterok:${lastjobid} partFour.sl
 ```
+{: .language-bash}
 
 > ## Why this way? 
 > What are the advantages of using of using Slurm job dependencies over submitting the next stage on the completion of the first?
