@@ -33,12 +33,13 @@ Or, if multiple conditions need to be used, this can be done using a `,` delimet
 `--dependency  afterok:jobid1,after:jobid1` This job will not start unless `jobid1` completed succesfully _and_ `jobid2` has started.
 `--dependency  afterok:jobid1?afterany:jobid1` This job will not start unless `jobid1` completed succesfully _or_ `jobid2` has completed.
 
-## -d
+> ## -d
 > `-d` is the short form of `--dependency`. Note the single dash instead of two.
 {: .callout}
 
 > ## Job dependency excersise.
 > Dini has the following output from `sacct`.
+> 
 > > JobID           JobName  Partition    Account  AllocCPUS      State ExitCode 
 > > ------------ ---------- ---------- ---------- ---------- ---------- -------- 
 > > 29880010         kakapo      large  nesi99999          2  COMPLETED      0:0 
@@ -48,6 +49,7 @@ Or, if multiple conditions need to be used, this can be done using a `,` delimet
 > > 29880015_1     seasnail      large  nesi99999          2  COMPLETED      0:0 
 > > 29880015_2     seasnail      large  nesi99999          2  RUNNING      0:0 
 > {: .output}
+> 
 > Based on this knowledge, which of the following dependencies would be able to run.
 > 1. `--dependency  after:29880012`
 > 2. `--dependency  afterok:kakapo`
@@ -98,6 +100,10 @@ In both examples, `partTwo.sl` will run on the successful conclusion of `partOne
 
 
 ## Building a Pipeline
+
+A useful snippet when builing a workflow is `lastjobid=$(sbatch <script> | awk '{ print $4 }'`, this allows you to submit a slurm job, and capture it's jobid as a variable.
+
+A multistage workflow can be sceduled all at once as below.
 
 ```
 lastjobid=$(sbatch partOne.sl | awk '{ print $4 }')
