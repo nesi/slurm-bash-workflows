@@ -39,15 +39,16 @@ Or, if multiple conditions need to be used, this can be done using a `,` delimet
 
 > ## Job dependency excersise.
 > Dini has the following output from `sacct`.
-> 
-> > JobID           JobName  Partition    Account  AllocCPUS      State ExitCode 
-> > ------------ ---------- ---------- ---------- ---------- ---------- -------- 
-> > 29880010         kakapo      large  nesi99999          2  COMPLETED      0:0 
-> > 29880012         takahe      large  nesi99999          2  RUNNING      0:0 
-> > 29880012            moa      large  nesi99999          2  PENDING      0:0 
-> > 29880013    stickinsect      large  nesi99999          2  FAILED      0:0 
-> > 29880015_1     seasnail      large  nesi99999          2  COMPLETED      0:0 
-> > 29880015_2     seasnail      large  nesi99999          2  RUNNING      0:0 
+> ```
+> JobID           JobName  Partition    Account  AllocCPUS      State ExitCode 
+> ------------ ---------- ---------- ---------- ---------- ---------- -------- 
+> 29880010         kakapo      large  nesi99999          2  COMPLETED      0:0 
+> 29880012         takahe      large  nesi99999          2  RUNNING      0:0 
+> 29880012            moa      large  nesi99999          2  PENDING      0:0 
+> 29880013    stickinsect      large  nesi99999          2  FAILED      0:0 
+> 29880015_1     seasnail      large  nesi99999          2  COMPLETED      0:0 
+> 29880015_2     seasnail      large  nesi99999          2  RUNNING      0:0 
+> ```
 > {: .output}
 > 
 > Based on this knowledge, which of the following dependencies would be able to run.
