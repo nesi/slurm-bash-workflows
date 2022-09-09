@@ -99,11 +99,128 @@ A max number of concurrent jobs can also be specified using `%`
 
 e.g. Will submit 100 jobs, but no more than 10 will be allowed to run at once.
 
-
+> ## Loop Submission
+> 
+> Wes is running a parametric sweep on NeSI, unfortunately no-one has told him about job arrays.
+> Unfortunatly Wes knows a little bit of bash, and so runs the following command.
+> ```
+> for i in {1..1000};do sbatch myScript.sl;done
+> ```
+> {: .language-bash}
+> Why might this be a problem?
+> > ## Solution
+> >
+> > * Difficult to manage: If the job needs to be cancelled you will have to retreive all of the seperate jobID's (or something like `scancel -u $USER`)
+> > * Organisation: If more than one sweep is being run, it will not be obvious which jobs belong to what.
+> > * Strain on Slurm: Could cause slowdowns or the database going down entirely.
+> > * Expensive: Uses lots of accounting resources (lots of jobIDs, rows in databases etc...)
+> > * Spammy: Will fill up job lists, skew statistics, etc.
+> {: .solution}
+{: .challenge}
 
 ## Task ID variable
 
+Every job in the array will be launched identically, except for one enviroment variable `SLURM_ARRAY_TASK_ID`. This 'task id' is analogous to the index of a for loop and should be used for differentiating inputs. 
+
+```
+#!/bin/bash
+
+#SBATCH --array=1-5
+
+echo "Hello, I am task number ${SLURM_ARRAY_TASK_ID}."
+```
+{: .language-bash}
 
 
+
+## Inputs
+
+A couple of examples on how task id can be used.
+
+> ## Scope
+> The below examples all use logic at the level of the bash script. 
+> If you are writing your own code, you might want to do your logic there, most languages will have a function you can use to access enviroment variables. for example in Python.  
+> ```
+> os.environ.get('SLURM_ARRAY_TASK_ID')
+> ```
+{: .callout}
+
+
+As an index to an array, useful if your inputs are non-numeric.
+Most langauges use zero based arrays, so make sure that the `--array` parameter reflects this.
+
+```
+#SBATCH --array 0-6
+
+inArray=("Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet")
+input=${inArray[$SLURM_ARRAY_TASK_ID]}
+```
+{: .language-bash}
+
+For selecting input files.
+This requires that you have consistantly named data and the matching range in the slurm header.
+
+```
+input=inputs/mesh_${SLURM_ARRAY_TASK_ID}.stl
+```
+{: .language-bash}
+
+As an index to an array of filenames. 
+
+```
+files=( inputs/*.dat )
+input=${files[SLURM_ARRAY_TASK_ID]}
+```
+{: .language-bash}
+
+As a seed for a pseudo-random number.
+
+<ul class="nav nav-tabs nav-justified" role="tablist">
+<li role="presentation"><a data-os="rand-python" href="#rand-python" aria-controls="rand-python" role="tab"
+data-toggle="tab">Python</a></li>
+<li role="presentation" class="active"><a data-os="rand-r" href="#rand-r" aria-controls="rand-r"
+role="tab" data-toggle="tab">R</a></li>
+<li role="presentation"><a data-os="rand-matlab" href="#rand-matlab" aria-controls="rand-matlab" role="tab"
+data-toggle="tab">MATLAB</a></li>
+</ul>
+
+<div class="tab-content">
+  
+<article role="tabpanel" class="tab-pane" id="rand-python">
+```
+task_id = os.environ.get("SLURM_ARRAY_TASK_ID")
+random.seed(task_id)
+```
+{: .language-python}
+</article>
+<article role="tabpanel" class="tab-pane active" id="rand-r">
+```
+task_id = as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
+set.seed(task_id)
+```
+{: .language-r}
+</article>
+
+<article role="tabpanel" class="tab-pane" id="rand-matlab">
+```
+task_id = str2num(getenv('SLURM_ARRAY_TASK_ID'))
+rng(task_id)
+```
+{: .language-matlab}
+</article>
+</div>
+</div>
+
+Using a seed is important, otherwise multiple jobs may receive the same pseudo-random numbers.
+
+## Outputs
+
+```
+%x
+```
+
+```
+--opem-mode append
+```
 
 {% include links.md %}
