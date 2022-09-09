@@ -97,24 +97,6 @@ A max number of concurrent jobs can also be specified using `%`
 
 e.g. Will submit 100 jobs, but no more than 10 will be allowed to run at once.
 
-> ## Loop Submission
-> 
-> Wesley is running a parametric sweep on NeSI.
-> Unfortunatly Wes knows a little bit of bash, and so runs the following command.
-> ```
-> for i in {1..1000};do sbatch myScript.sl;done
-> ```
-> {: .language-bash}
-> Why might this be a problem?
-> > ## Solution
-> >
-> > * Difficult to manage: If the job needs to be cancelled you will have to retreive all of the seperate jobID's (or something like `scancel -u $USER`)
-> > * Organisation: If more than one sweep is being run, it will not be obvious which jobs belong to what.
-> > * Strain on Slurm: Could cause slowdowns or the database going down entirely.
-> > * Expensive: Uses lots of accounting resources (lots of jobIDs, rows in databases etc...)
-> > * Spammy: Will fill up job lists, skew statistics, etc.
-> {: .solution}
-{: .challenge}
 
 ## Task ID variable
 
@@ -218,7 +200,7 @@ Using a seed is important, otherwise multiple jobs may receive the same pseudo-r
 
 ## Outputs
 
-> ## Loop Submission
+> ## Array Outputs
 > 
 > Matthew is using a job array as an intermediatary step in a pipeline. Both the inputs and outputs must match a specific naming convention.
 >  
@@ -233,6 +215,7 @@ Using a seed is important, otherwise multiple jobs may receive the same pseudo-r
 > input_file="stage2/partition${SLURM_ARRAY_TASK_ID}.stl
 > {: .language-bash}
 > Where will Matthew need to look to find the output of the 17th job?
+> 
 > > ## Solution
 > >
 > > The output of _all_ one-hundred jobs will be written to a file named `stage3/partition.log`, 
@@ -240,7 +223,6 @@ Using a seed is important, otherwise multiple jobs may receive the same pseudo-r
 > > This is because `$SLURM_ARRAY_TASK_ID` is set in the enviroment of the job being run, 
 > > where as the Slurm header is read when and where `sbatch` is called.  
 > > So unless `SLURM_ARRAY_TASK_ID` is set to something in the submitters enviroment the value in the header will be empty.
-
 > {: .solution}
 {: .challenge}
 
