@@ -12,7 +12,7 @@ keypoints:
 
 The best way to submit many jobs in a responsible and easy to handle way is to use _Slurm Job arrays_.
 
-# What is a Slurm Job Array
+## What is a Slurm Job Array
 
 A job array differs from a regular Slurm job in that it has many child 'tasks', each of these tasks running the same script.
 
