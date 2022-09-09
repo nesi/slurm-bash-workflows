@@ -184,26 +184,32 @@ data-toggle="tab">MATLAB</a></li>
 <div class="tab-content">
   
 <article role="tabpanel" class="tab-pane" id="rand-python">
+  
 ```
 task_id = os.environ.get("SLURM_ARRAY_TASK_ID")
 random.seed(task_id)
 ```
 {: .language-python}
+  
 </article>
 <article role="tabpanel" class="tab-pane active" id="rand-r">
+  
 ```
 task_id = as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 set.seed(task_id)
 ```
 {: .language-r}
+  
 </article>
 
 <article role="tabpanel" class="tab-pane" id="rand-matlab">
+  
 ```
 task_id = str2num(getenv('SLURM_ARRAY_TASK_ID'))
 rng(task_id)
 ```
 {: .language-matlab}
+
 </article>
 </div>
 </div>
