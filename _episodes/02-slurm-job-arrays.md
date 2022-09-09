@@ -38,7 +38,7 @@ By default, tasks in the same state will be folded into one line in `squeue`.
 
 > ## Loop Submission
 > 
-> Wes is running a parametric sweep on NeSI, unfortunately no-one has told him about job arrays.
+> Wes is running a parametric sweep on NeSI, no-one has told him about job arrays.
 > Unfortunatly Wes knows a little bit of bash, and so runs the following command.
 > ```
 > for i in {1..1000};do sbatch myScript.sl;done
@@ -63,13 +63,11 @@ A Slurm script can be made into a job array by including the `--array` parameter
 #SBATCH --time    00:15:00
 #SBATCH --mem     2G
 #SBATCH --array   1-10
-#SBATCH --output  part%a.out
 ```
 {: .language-bash}
 
 Will cause the above job to run 10 times.
 The resources specified are for each job individualy. e.g. Each job will get 2G of memory and 15 minutes walltime.
-The token `%a` can be used in Slurm parameters and is subtituted for the taskID. e.g. Outputs will be `part1.out`,`part2.out`...
 
 The array parameter accepts multiple formats.
 
@@ -101,7 +99,7 @@ e.g. Will submit 100 jobs, but no more than 10 will be allowed to run at once.
 
 > ## Loop Submission
 > 
-> Wes is running a parametric sweep on NeSI, unfortunately no-one has told him about job arrays.
+> Wesley is running a parametric sweep on NeSI.
 > Unfortunatly Wes knows a little bit of bash, and so runs the following command.
 > ```
 > for i in {1..1000};do sbatch myScript.sl;done
@@ -132,7 +130,6 @@ echo "Hello, I am task number ${SLURM_ARRAY_TASK_ID}."
 {: .language-bash}
 
 
-
 ## Inputs
 
 A couple of examples on how task id can be used.
@@ -143,8 +140,8 @@ A couple of examples on how task id can be used.
 > ```
 > os.environ.get('SLURM_ARRAY_TASK_ID')
 > ```
+> {: .language-python}
 {: .callout}
-
 
 As an index to an array, useful if your inputs are non-numeric.
 Most langauges use zero based arrays, so make sure that the `--array` parameter reflects this.
@@ -215,9 +212,38 @@ Using a seed is important, otherwise multiple jobs may receive the same pseudo-r
 
 ## Outputs
 
-```
-%x
-```
+> ## Loop Submission
+> 
+> Matthew is using a job array as an intermediatary step in a pipeline. Both the inputs and outputs must match a specific naming convention.
+>  
+> ```
+> #!/bin/bash
+>
+> #SBATCH --mem 2G
+> #SBATCH --time 01:00:00
+> #SBATCH --array 1-100
+> #SBATCH --output stage3/partition${SLURM_ARRAY_TASK_ID}.log
+> 
+> input_file="stage2/partition${SLURM_ARRAY_TASK_ID}.stl
+> {: .language-bash}
+> Where will Matthew need to look to find the output of the 17th job?
+> > ## Solution
+> >
+> > The output of _all_ one-hundred jobs will be written to a file named `stage3/partition.log`, 
+> > in practice this means only the last job to finish will be recorded there. 
+> > This is because `$SLURM_ARRAY_TASK_ID` is set in the enviroment of the job being run, 
+> > where as the Slurm header is read when and where `sbatch` is called.  
+> > So unless `SLURM_ARRAY_TASK_ID` is set to something in the submitters enviroment the value in the header will be empty.
+
+> {: .solution}
+{: .challenge}
+
+### Tokens
+
+Properties in the Slurm header can be set dynamically through the use of tokens. The important one to us here is `%a` which will evaluate to the Task ID
+
+For example `--output part%a.out` will lead to outputs named, `part1.out`,`part2.out` etc.
+More info about the other tokens can be found in the [Slurm Documentation](https://slurm.schedmd.com/sbatch.html#SECTION_%3CB%3Efilename-pattern%3C/B%3E).
 
 ```
 --opem-mode append
