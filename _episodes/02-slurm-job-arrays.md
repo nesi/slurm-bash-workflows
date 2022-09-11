@@ -211,9 +211,11 @@ Using a seed is important, otherwise multiple jobs may receive the same pseudo-r
 > #SBATCH --time 01:00:00
 > #SBATCH --array 1-100
 > #SBATCH --output stage3/partition${SLURM_ARRAY_TASK_ID}.log
-> 
+>
+>```
 > input_file="stage2/partition${SLURM_ARRAY_TASK_ID}.stl
-> {: .language-bash}
+>```
+>  {: .language-bash}
 > Where will Matthew need to look to find the output of the 17th job?
 > 
 > > ## Solution
@@ -233,8 +235,13 @@ Properties in the Slurm header can be set dynamically through the use of tokens.
 For example `--output part%a.out` will lead to outputs named, `part1.out`,`part2.out` etc.
 More info about the other tokens can be found in the [Slurm Documentation](https://slurm.schedmd.com/sbatch.html#SECTION_%3CB%3Efilename-pattern%3C/B%3E).
 
+### Open Mode
+
+Sometimes when running large job arrays you may _want_ all of your logs going into one file. By default Slurm will overwrite existing text in the specified file, this can be changed with the `--open-mode` parameter.
+
 ```
---opem-mode append
+--open-mode append
 ```
+This will allow multiple jobs to write into one file (note this may lead to some scrambled/mixed outputs).
 
 {% include links.md %}
