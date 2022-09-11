@@ -5,8 +5,8 @@ exercises: 5
 questions:
 - "How can repeat jobs be scheduled?"
 keypoints:
-- "Scrontabs (Slurm-Crontab) can be used to run slurm jobs at regular interviews.
-- "Scrontabs use `#SCRON` instead of `#SBATCH`"
+- "Scrontabs (Slurm-Crontab) can be used to run slurm jobs at regular interviews."
+- "Scrontabs use #SCRON instead of #SBATCH"
 ---
 
 Note: This lesson was mostly copied from [YCRC](https://docs.ycrc.yale.edu/), 
