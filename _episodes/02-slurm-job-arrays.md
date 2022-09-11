@@ -5,9 +5,8 @@ exercises: 5
 questions:
 - "What is a Slurm job array?"
 - "Why not just submit jobs in a loop?"
-- "?"
 keypoints:
-- ""
+- "Use them"
 ---
 
 The best way to submit many jobs in a responsible and easy to handle way is to use _Slurm Job arrays_.
