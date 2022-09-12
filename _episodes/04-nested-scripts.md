@@ -8,7 +8,7 @@ keypoints:
 - "Wrapper script"
 ---
 
+## Wrapper scripts
 
-
-
-## Wrapper scripts?
+A 'wrapper' is a script that supports the execution of some proccess. 
+In this case, we are talking about a bash script wrapping a Slurm command.
