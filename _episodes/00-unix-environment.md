@@ -1,15 +1,17 @@
 
 ---
-title: "Inputs and Outpus"
+title: "Unix Enviroment"
 teaching: 15
 exercises: 5
 questions:
-- "What is a Slurm job dependency?"
+- ""
 keypoints:
-- "Dependency chains allow for better scheduling."
+- ""
 ---
 
-## Unix proccesses
+## Shell
+
+## Unix piping
 
 Unix processes have a standard input stream (stdin) and a standard output stream (stdout). 
 
@@ -22,9 +24,7 @@ The pipe symbol ‘|’ can join multiple processes together into a very simple 
 
 For more info see [episode 4 of shell-novice](https://swcarpentry.github.io/shell-novice/04-pipefilter/index.html)
 
-## Inputs
-
-## Outputs
+## Enviroment variable
 
 Talk about 
 
