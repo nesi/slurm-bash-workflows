@@ -82,9 +82,9 @@ Or, if multiple conditions need to be used, this can be done using a `,` delimet
 
 ## Getting job IDs
 
-You can catch the ID of a job you have just submitted using.
+You can catch the ID of a job you have just submitted using the flag `--parsable`.
 ```
-jobid=$(sbatch partOne.sl | awk '{ print $4 }')
+jobid=$(sbatch --parsable partOne.sl)
 sbatch -d afterok:${jobid} partTwo.sl
 ```
 
@@ -108,14 +108,14 @@ In both examples, `partTwo.sl` will run on the successful conclusion of `partOne
 
 ## Building a Pipeline
 
-A useful snippet when builing a workflow is `lastjobid=$(sbatch <script> | awk '{ print $4 }'`, this allows you to submit a slurm job, and capture it's jobid as a variable.
+A useful snippet when builing a workflow is `lastjobid=$(sbatch  --parsable  <script>)`, this allows you to submit a slurm job, and capture it's jobid as a variable.
 
 A multistage workflow can be sceduled all at once as below.
 
 ```
-lastjobid=$(sbatch partOne.sl | awk '{ print $4 }')
-lastjobid=$(sbatch -d afterok:${lastjobid} partTwo.sl | awk '{ print $4 }')
-lastjobid=$(sbatch -d afterok:${lastjobid} partThree.sl | awk '{ print $4 }')
+lastjobid=$(sbatch --parsable  partOne.sl)
+lastjobid=$(sbatch --parsable  -d afterok:${lastjobid} partTwo.sl)
+lastjobid=$(sbatch --parsable -d afterok:${lastjobid} partThree.sl)
 sbatch -d afterok:${lastjobid} partFour.sl
 ```
 {: .language-bash}
