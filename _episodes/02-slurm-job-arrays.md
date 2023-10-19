@@ -80,7 +80,7 @@ as `1`,`2`,`3`,`4`,`5`
 --array=3,5,7
 ```
 {: .language-bash}
-as `2`,`4`,`6`
+as `3`,`5`,`7`
 
 ```
 --array=2-6:2
@@ -192,7 +192,6 @@ rng(task_id)
 {: .language-matlab}
 
 </article>
-</div>
 </div>
 
 Using a seed is important, otherwise multiple jobs may receive the same pseudo-random numbers.
