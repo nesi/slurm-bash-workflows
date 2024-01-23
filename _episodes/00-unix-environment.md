@@ -48,11 +48,39 @@ a=1; b=2; c=$((a + b)); echo ${c}
 
 ### Multi-line One-lines
 
-A single line can be broken into multiple lines using `\`, for example.
+A single line can be broken into multiple lines using `\`
 
+For example.
+
+```sh
+abaqus interactive job=1_2mmThick_10mmCell input=../../1_2mmThick_10mmCell  verbose=2 cpus=12 domains=6 mp_mode=threads user=../../some_udf.c double=explicit gpus=1 >> output.log
 ```
 
+Can be written as
+
+```sh
+abaqus interactive\
+    job=1_2mmThick_10mmCell\
+    input=../../1_2mmThick_10mmCell\
+    verbose=2\
+    cpus=12\
+    domains=6\
+    mp_mode=threads\
+    user=../../some_udf.c\
+    double=explicit\
+    gpus=1\
+    >> output.log
 ```
+
+The above example uses indentation to indicate the broken lines are still part of the same command. The whitespace is _not ignored_ meaning the command will be interpreted as
+
+```sh
+abaqus interactive    job=1_2mmThick_10mmCell    input=../../1_2mmThick_10mmCell    verbose=2    cpus=12    domains=6    mp_mode=threads    user=../../some_udf.c    double=explicit    gpus=1    >> output.log
+```
+If the command being used is modified by whitespace, you will need to take this under consideration.
+
+!!! warn
+    The escaping `\` needs to be the last character before the newline (including whitespace). This can be a difficult typo to spot, if your editor has a setting to display whitespace characters, it is a good idea to enable this. 
 
 
 ## Enviroment variable
