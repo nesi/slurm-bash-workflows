@@ -24,6 +24,37 @@ The pipe symbol ‘|’ can join multiple processes together into a very simple 
 
 For more info see [episode 4 of shell-novice](https://swcarpentry.github.io/shell-novice/04-pipefilter/index.html)
 
+
+## Script Readability
+
+### One-Line Multi-lines
+
+Any multiline commands can be written inline by substituting the newline with a `;`.
+
+For example 
+
+```sh
+a=1
+b=2
+c=$((a + b))
+echo ${c}
+```
+
+Can be written as
+
+```sh
+a=1; b=2; c=$((a + b)); echo ${c}
+```
+
+### Multi-line One-lines
+
+A single line can be broken into multiple lines using `\`, for example.
+
+```
+
+```
+
+
 ## Enviroment variable
 
 Talk about 
