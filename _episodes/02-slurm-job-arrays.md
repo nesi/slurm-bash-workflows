@@ -110,7 +110,6 @@ echo "Hello, I am task number ${SLURM_ARRAY_TASK_ID}."
 ```
 {: .language-bash}
 
-
 ## Inputs
 
 A couple of examples on how task id can be used.
@@ -195,6 +194,8 @@ rng(task_id)
 </div>
 
 Using a seed is important, otherwise multiple jobs may receive the same pseudo-random numbers.
+
+## Multidimensional arrays
 
 ## Outputs
 
