@@ -195,7 +195,16 @@ rng(task_id)
 
 Using a seed is important, otherwise multiple jobs may receive the same pseudo-random numbers.
 
-## Multidimensional arrays
+## Multidimensional Arrays
+
+If you are trying to turn a nested loop or multidimensional array into a Slurm array job, this can be done with some arithmetic.
+
+Say you have a nested loop 
+
+```sh
+for i in 
+```
+
 
 ## Outputs
 
