@@ -202,9 +202,31 @@ If you are trying to turn a nested loop or multidimensional array into a Slurm a
 Say you have a nested loop 
 
 ```sh
-for i in 
+meals=( "breakfast" "lunch" "dinner" )
+days=( "Mon" "Tue" "Wed" "Thu" "Fri" "Sat" "Sun")
+for day in $days; do
+  for meal in $meals; do
+     echo "$day: $meal"
+  done
+done
 ```
 
+This can be flattened into a single dimensional array, indexed by `SLURM_ARRAY_TASK_ID` 
+
+```
+meals=( "breakfast" "lunch" "dinner" )
+days=( "Mon" "Tue" "Wed" "Thu" "Fri" "Sat" "Sun")
+
+day=${days[(( SLURM_ARRAY_TASK_ID / ${#meals[@]} ))]}
+meal=${meals[(( SLURM_ARRAY_TASK_ID % ${#meals[@]} ))]}
+```
+
+Generalising for nth dimensional arrays.
+
+Where `i_s` is the index for dimension `s` where `s` is part of sequence of `S`
+```
+i_s = ( SLURM_ARRAY_TASK_ID % ( ) / ( |s+1| ... s_n ) )
+```
 
 ## Outputs
 
