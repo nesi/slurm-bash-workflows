@@ -128,4 +128,7 @@ sbatch -d afterok:${lastjobid} partFour.sl
 > {: .solution}
 {: .challenge}
 
+
+TODO: Automatically resubmitting failed jobs with more resources.
+
 {% include links.md %}
